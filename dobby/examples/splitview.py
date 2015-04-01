@@ -26,7 +26,7 @@ class Graze(dobby.App):
         right_container.constrain(right_label.TOP == right_container.TOP + 5)
         right_container.constrain(right_label.RIGHT == right_container.RIGHT - 5)
 
-        self.split = dobby.SplitContainer()
+        self.split = dobby.SplitView()
         self.split.content = [left_container, right_container]
 
         main_container.add(self.split)

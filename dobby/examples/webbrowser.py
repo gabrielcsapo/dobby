@@ -14,8 +14,10 @@ class Graze(dobby.App):
 
         self.webview.url = self.url_input.value
         self.go_button = dobby.Button('Go', on_click=self.load_page)
-        self.go_back_button = dobby.Button('<-', on_click=self.goBack)
-        self.go_forward_button = dobby.Button('->', on_click=self.goForward)
+        left_image = dobby.Image('font-awesome/angle_left.png', width=20, height=15)
+        self.go_back_button = dobby.Button('', image=left_image.get_image(), on_click=self.goBack)
+        right_image = dobby.Image('font-awesome/angle_right.png', width=20, height=15)
+        self.go_forward_button = dobby.Button('', image=right_image.get_image(), on_click=self.goForward)
 
         container = dobby.Container()
 

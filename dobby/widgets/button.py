@@ -15,10 +15,11 @@ class ButtonImpl_impl(object):
 ButtonImpl = ObjCClass('ButtonImpl')
 
 class Button(Widget):
-    def __init__(self, label, on_click=None, type=NSMomentaryPushInButton):
+    def __init__(self, label, on_click=None, type=NSMomentaryPushInButton, image=None):
         super(Button, self).__init__()
         self.label = label
         self.type = type
+        self.image = image
         self.on_click = on_click
         self.startup()
 
@@ -33,28 +34,31 @@ class Button(Widget):
         self._impl.setAction_(get_selector('onPress:'))
         self._impl.setTranslatesAutoresizingMaskIntoConstraints_(False)
 
-    def setMomentaryButton(self):
+        if(self.image):
+            self._impl.setImage_(self.image)
+
+    def set_momentary(self):
         self._impl.setButtonType_(NSMomentaryLightButton)
 
-    def setToggleButton(self):
+    def set_toggle(self):
         self._impl.setButtonType_(NSToggleButton)
 
-    def setBasicButton(self):
+    def set_basic(self):
         self._impl.setButtonType_(NSPushOnPushOffButton)
 
-    def setSwitchButton(self):
+    def set_switch(self):
         self._impl.setButtonType_(NSSwitchButton)
 
-    def setRadioButton(self):
+    def set_radio(self):
         self._impl.setButtonType_(NSRadioButton)
     
-    def setMomentaryChangeButton(self):
+    def set_momentary_change(self):
         self._impl.setButtonType_(NSMomentaryChangeButton)
 
-    def setOnOffButton(self):
+    def set_on_off(self):
         self._impl.setButtonType_(NSOnOffButton)
 
-    def setMomentaryPushInButton(self):
+    def set_momentary_push_in(self):
         self._impl.setButtonType_(NSMomentaryPushInButton)
 
     def state(self):

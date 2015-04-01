@@ -51,7 +51,7 @@ class StatusBar(Widget):
         self._item.setTitle_(get_NSString(self.title))
         self._item.setHighlightMode_(True)
 
-    def addItem(self, text, function=None, tooltip=""):
+    def add_item(self, text, function=None, tooltip=""):
         item = NSMenuItem.alloc()
         item.setTitle_(get_NSString(text))
         item.setEnabled_(True)

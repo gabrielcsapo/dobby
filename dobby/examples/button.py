@@ -17,59 +17,66 @@ class Graze(dobby.App):
         left_container.constrain(self.basic_button.LEFT == left_container.LEFT + 5)
 
         self.momentary_button = dobby.Button("Momentary Button", on_click=self.buttonChange)
-        self.momentary_button.setMomentaryButton()
+        self.momentary_button.set_momentary()
         left_container.add(self.momentary_button)
         left_container.constrain(self.momentary_button.TOP == self.basic_button.BOTTOM + 5)
         left_container.constrain(self.momentary_button.RIGHT == left_container.RIGHT - 5)
         left_container.constrain(self.momentary_button.LEFT == left_container.LEFT + 5)
 
         self.toggle_button = dobby.Button("Toggle Button", on_click=self.buttonChange)
-        self.toggle_button.setToggleButton()
+        self.toggle_button.set_toggle()
         left_container.add(self.toggle_button)
         left_container.constrain(self.toggle_button.TOP == self.momentary_button.BOTTOM + 5)
         left_container.constrain(self.toggle_button.RIGHT == left_container.RIGHT - 5)
         left_container.constrain(self.toggle_button.LEFT == left_container.LEFT + 5)
 
         self.switch_button = dobby.Button("Switch Button", on_click=self.buttonChange)
-        self.switch_button.setSwitchButton()
+        self.switch_button.set_switch()
         left_container.add(self.switch_button)
         left_container.constrain(self.switch_button.TOP == self.toggle_button.BOTTOM + 5)
         left_container.constrain(self.switch_button.RIGHT == left_container.RIGHT - 5)
         left_container.constrain(self.switch_button.LEFT == left_container.LEFT + 5)
 
         self.radio_button = dobby.Button("Radio Button", on_click=self.buttonChange)
-        self.radio_button.setRadioButton()
+        self.radio_button.set_radio()
         left_container.add(self.radio_button)
         left_container.constrain(self.radio_button.TOP == self.switch_button.BOTTOM + 5)
         left_container.constrain(self.radio_button.RIGHT == left_container.RIGHT - 5)
         left_container.constrain(self.radio_button.LEFT == left_container.LEFT + 5)
 
         self.radio_button_2 = dobby.Button("Radio Button", on_click=self.buttonChange)
-        self.radio_button_2.setRadioButton()
+        self.radio_button_2.set_radio()
         left_container.add(self.radio_button_2)
         left_container.constrain(self.radio_button_2.TOP == self.switch_button.BOTTOM + 5)
         left_container.constrain(self.radio_button_2.LEFT == self.radio_button.LEFT + 100)
 
         self.momentary_change_button = dobby.Button("Momentary Change Button", on_click=self.buttonChange)
-        self.momentary_change_button.setMomentaryChangeButton()
+        self.momentary_change_button.set_momentary_change()
         left_container.add(self.momentary_change_button)
         left_container.constrain(self.momentary_change_button.TOP == self.radio_button.BOTTOM + 5)
         left_container.constrain(self.momentary_change_button.RIGHT == left_container.RIGHT - 5)
         left_container.constrain(self.momentary_change_button.LEFT == left_container.LEFT + 5)
 
         self.on_off_button = dobby.Button("On Off Button", on_click=self.buttonChange)
-        self.on_off_button.setOnOffButton()
+        self.on_off_button.set_on_off()
         left_container.add(self.on_off_button)
         left_container.constrain(self.on_off_button.TOP == self.momentary_change_button.BOTTOM + 5)
         left_container.constrain(self.on_off_button.RIGHT == left_container.RIGHT - 5)
         left_container.constrain(self.on_off_button.LEFT == left_container.LEFT + 5)
 
         self.momentary_pushin_button = dobby.Button("Momentary Push in Button", on_click=self.buttonChange)
-        self.momentary_pushin_button.setMomentaryPushInButton()
+        self.momentary_pushin_button.set_momentary_push_in()
         left_container.add(self.momentary_pushin_button)
         left_container.constrain(self.momentary_pushin_button.TOP == self.on_off_button.BOTTOM + 5)
         left_container.constrain(self.momentary_pushin_button.RIGHT == left_container.RIGHT - 5)
         left_container.constrain(self.momentary_pushin_button.LEFT == left_container.LEFT + 5)
+
+        right_image = dobby.Image('font-awesome/apple22.png', width=20, height=15)
+        self.image_button = dobby.Button('', image=right_image.get_image(), on_click=self.buttonChange)
+        left_container.add(self.image_button)
+        left_container.constrain(self.image_button.TOP == self.momentary_pushin_button.BOTTOM + 5)
+        left_container.constrain(self.image_button.RIGHT == left_container.RIGHT - 5)
+        left_container.constrain(self.image_button.LEFT == left_container.LEFT + 5)
 
         right_container = dobby.Container()
         self.table = dobby.TableView(['Button Name', 'State'])
@@ -79,7 +86,7 @@ class Graze(dobby.App):
         right_container.constrain(self.table.LEFT == right_container.LEFT + 5)
         right_container.constrain(self.table.BOTTOM == right_container.BOTTOM + 5)
 
-        self.split = dobby.SplitContainer()
+        self.split = dobby.SplitView()
         self.split.content = [left_container, right_container]
         self.split.setVertical()
 
@@ -96,6 +103,7 @@ class Graze(dobby.App):
         data.append(['momentary_change_button', str(self.momentary_change_button.state())])
         data.append(['on_off_button', str(self.on_off_button.state())])
         data.append(['momentary_pushin_button', str(self.momentary_pushin_button.state())])
+        data.append(['image_button', str(self.image_button.state())])
         self.table.setData(data)
 
 if __name__ == '__main__':

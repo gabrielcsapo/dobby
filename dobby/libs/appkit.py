@@ -21,6 +21,14 @@ NSEventTrackingRunLoopMode = c_void_p.in_dll(appkit, 'NSEventTrackingRunLoopMode
 NSApplicationDidHideNotification = c_void_p.in_dll(appkit, 'NSApplicationDidHideNotification')
 NSApplicationDidUnhideNotification = c_void_p.in_dll(appkit, 'NSApplicationDidUnhideNotification')
 
+# UI
+UIControlStateNormal       = 0
+UIControlStateHighlighted  = 1 << 0
+UIControlStateDisabled     = 1 << 1
+UIControlStateSelected     = 1 << 2
+UIControlStateApplication  = 0x00FF0000
+UIControlStateReserved     = 0xFF000000
+
 # NSEvent.h
 NSAnyEventMask = 0xFFFFFFFF  # NSUIntegerMax
 
@@ -237,6 +245,8 @@ NSMenu = ObjCClass('NSMenu')
 NSMenuItem = ObjCClass('NSMenuItem')
 NSStatusBar = ObjCClass('NSStatusBar')
 NSStatusItem = ObjCClass('NSStatusItem')
+
+NSImage = ObjCClass('NSImage')
 
 # NSRunningApplication.h
 NSApplicationActivationPolicyRegular = 0
