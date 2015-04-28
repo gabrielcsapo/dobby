@@ -60,3 +60,14 @@ class StatusBar(Widget):
         item.setToolTip_(get_NSString(tooltip))
         self._callbacks[item] = dict(text=text,function=function)
         self._menu.addItem_(item)
+
+    def add_seperator(self):
+        item = NSMenuItem.alloc()
+        self._menu.addItem_(item.separatorItem())
+
+    def add_view(self, view):
+        item = NSMenuItem.alloc()
+        item.setEnabled_(True)
+        item.setTarget_(item)
+        item.setView_(view)
+        self._menu.addItem_(item)

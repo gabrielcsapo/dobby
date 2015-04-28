@@ -38,7 +38,7 @@ class Graze(dobby.App):
         right_container = dobby.Container()
 
         self.split = dobby.SplitView()
-        self.split.setVertical()
+        self.split.set_vertical()
         self.split.content = [left_container, right_container]
 
         main_container.add(self.split)

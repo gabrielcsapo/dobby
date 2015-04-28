@@ -40,27 +40,17 @@ class SplitView(Widget):
         self._content[1].app = self.app
         self._impl.addSubview_(self._content[1]._impl)
 
-    def _set_app(self, app):
-        if self._content:
-            self._content[0].app = self.app
-            self._content[1].app = self.app
-
-    def _set_window(self, window):
-        if self._content:
-            self._content[0].window = self.window
-            self._content[1].window = self.window
-
-    def setVertical(self):
+    def set_vertical(self):
         self.HORIZONTAL = False
         self.VERTICAL = True
         self._impl.setVertical_(True)
 
-    def setHorizontal(self):
+    def set_horizontal(self):
         self.HORIZONTAL = True
         self.VERTICAL = False
         self._impl.setVertical_(False)
 
-    def changeDirection(self):
+    def toggle(self):
         if(self.HORIZONTAL):
             self.setVertical()
         else:

@@ -72,7 +72,7 @@ class Graze(dobby.App):
         left_container.constrain(self.momentary_pushin_button.LEFT == left_container.LEFT + 5)
 
         right_image = dobby.Image('font-awesome/apple22.png', width=20, height=15)
-        self.image_button = dobby.Button('', image=right_image.get_image(), on_click=self.buttonChange)
+        self.image_button = dobby.Button('', image=right_image.get_inst(), on_click=self.buttonChange)
         left_container.add(self.image_button)
         left_container.constrain(self.image_button.TOP == self.momentary_pushin_button.BOTTOM + 5)
         left_container.constrain(self.image_button.RIGHT == left_container.RIGHT - 5)
@@ -88,7 +88,7 @@ class Graze(dobby.App):
 
         self.split = dobby.SplitView()
         self.split.content = [left_container, right_container]
-        self.split.setVertical()
+        self.split.set_vertical()
 
         app.main_window.content = self.split
 

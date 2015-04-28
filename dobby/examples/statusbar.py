@@ -9,6 +9,7 @@ class Graze(dobby.App):
         self.dialog = dobby.Dialog()
         self.statusbar = dobby.StatusBar(title="Tasks")
         self.statusbar.add_item("toggleWindow", self.toggle_window, "toggleWindow")
+        self.statusbar.add_seperator()
         self.statusbar.add_item("alert", self.alert, 'alert something')
 
     def toggle_window(self, item):

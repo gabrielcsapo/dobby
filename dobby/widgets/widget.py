@@ -47,3 +47,9 @@ class Widget(object):
 
     def __repr__(self):
         return "<%s:%s>" % (self.__class__.__name__, id(self))
+
+    def startup(self):
+        pass
+
+    def get_inst(self):
+        return self._impl

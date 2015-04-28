@@ -11,6 +11,7 @@ from .widgets.image import *
 from .widgets.icon import *
 from .widgets.label import *
 from .widgets.tabcontainer import *
+from .widgets.view import *
 from .widgets.passwordinput import *
 from .widgets.progressbar import *
 from .widgets.scrollcontainer import *
@@ -43,6 +44,7 @@ __all__ = [
     'TableView',
     'TextInput',
     'Tree',
+    'View',
     'WebView',
 ]
 

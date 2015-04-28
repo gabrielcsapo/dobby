@@ -2,6 +2,7 @@ from __future__ import print_function, absolute_import, division
 
 import dobby, os
 from ..libs import *
+from ..widgets.image import *
 
 class Icon(object):
     app_icon = None
@@ -16,7 +17,7 @@ class Icon(object):
         else:
             filename = self.path
 
-        self._impl = NSImage.alloc().initWithContentsOfFile_(get_NSString(filename))
+        self._impl = Image(filename).get_inst()
 
     @staticmethod
     def load(path_or_icon, default=None):

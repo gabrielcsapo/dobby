@@ -18,6 +18,3 @@ class Image(Widget):
         if(self.height and self.width):
             size = NSMakeSize(self.width, self.height)
             self._impl.setSize_(size)
-
-    def get_image(self):
-        return self._impl

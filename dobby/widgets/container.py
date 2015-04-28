@@ -18,72 +18,63 @@ class NSContainer_impl(object):
 
     @NSContainer.method('v@')
     def mouseDown_(self, event):
-        print('mouseDown')
+        if self.interface.mouseDown:
+            process_callback(self.interface.mouseDown(event))
 
     @NSContainer.method('v@')
     def mouseDragged_(self, event):
-        print('mouseDragged')
+        if self.interface.mouseDragged:
+            process_callback(self.interface.mouseDragged(event))
 
     @NSContainer.method('v@')
     def mouseUp_(self, event):
-        print('mouseUp')
+        if self.interface.mouseUp:
+            process_callback(self.interface.mouseUp(event))
 
     @NSContainer.method('v@')
     def mouseMoved_(self, event):
-        print('mouseMoved')
+        if self.interface.mouseMoved:
+            process_callback(self.interface.mouseMoved(event))
 
     @NSContainer.method('v@')
     def mouseEntered_(self, event):
-        print('mouseEntered')
+        if self.interface.mouseEnter:
+            process_callback(self.interface.mouseEnter(event))
 
     @NSContainer.method('v@')
     def mouseExited_(self, event):
-        print('mouseExited')
+        if self.interface.mouseExit:
+            process_callback(self.interface.mouseExit(event))
 
     @NSContainer.method('v@')
     def rightMouseDragged_(self, event):
-        print('rightMouseDragged')
+        if self.interface.rightMouseDragged:
+            process_callback(self.interface.rightMouseDragged(event))
 
     @NSContainer.method('v@')
     def rightMouseUp_(self, event):
-        print('rightMouseUp')
-
-    @NSContainer.method('v@')
-    def otherMouseDown_(self, event):
-        print('otherMouseDown')
-
-    @NSContainer.method('v@')
-    def otherMouseDragged_(self, event):
-        print('otherMouseDragged')
-
-    @NSContainer.method('v@')
-    def otherMouseUp_(self, event):
-        print('otherMouseUp')
+        if self.interface.rightMouseUp:
+            process_callback(self.interface.rightMouseUp(event))
 
     @NSContainer.method('v@')
     def scrollWheel_(self, event):
-        print('scrollWheel')
+        if self.interface.scroll:
+            process_callback(self.interface.scroll(event))
 
     @NSContainer.method('v@')
     def keyDown_(self, event):
-        print('keyDown')
+        if self.interface.keyDown:
+            process_callback(self.interface.keyDown(event))
 
     @NSContainer.method('v@')
     def keyUp_(self, event):
-        print('keyUp')
+        if self.interface.keyUp:
+            process_callback(self.interface.keyUp(event))
 
     @NSContainer.method('v@')
     def flagsChanged_(self, event):
-        print('flagsChanged')
-
-    @NSContainer.method('v@')
-    def tabletPoint_(self, event):
-        print('tabletPoint')
-
-    @NSContainer.method('v@')
-    def tabletProximity_(self, event):
-        print('tabletProximity')
-
+        if self.interface.flagsChanged:
+            process_callback(self.interface.flagsChanged(event))
 
 NSContainer = ObjCClass('NSContainer')
 
@@ -109,15 +100,30 @@ class Container(Widget):
         Constraint.GTE: NSLayoutRelationGreaterThanOrEqual,
     }
 
-    def __init__(self):
+    def __init__(self,  mouseDown=None, mouseDragged=None, mouseUp=None, mouseMoved=None, mouseEnter=None, mouseExit=None, rightMouseDragged=None, rightMouseUp=None, scroll=None, keyDown=None, keyUp=None, flagsChanged=None):
         super(Container, self).__init__()
         self.children = []
         self.constraints = {}
+
+        self.mouseDown = mouseDown
+        self.mouseDragged = mouseDragged
+        self.mouseUp = mouseUp
+        self.mouseMoved = mouseMoved
+        self.mouseEnter = mouseEnter
+        self.mouseExit = mouseExit
+        self.rightMouseDragged = rightMouseDragged
+        self.rightMouseUp = rightMouseUp
+        self.scroll = scroll
+        self.keyDown = keyDown
+        self.keyUp = keyUp
+        self.flagsChanged = flagsChanged
+
         self.startup()
 
     def startup(self):
         self._impl = NSContainer.alloc().init()
         self._impl.setTranslatesAutoresizingMaskIntoConstraints_(False)
+        self._impl.interface = self
 
     def add(self, widget):
         self.children.append(widget)
@@ -131,6 +137,9 @@ class Container(Widget):
     def _set_window(self, window):
         for child in self.children:
             child.window = window
+
+    def get_view(self):
+        return self._impl
 
     def constrain(self, constraint):
         "Add the given constraint to the widget."
