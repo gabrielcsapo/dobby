@@ -1,6 +1,5 @@
-from ..libs import *
-
 from .icon import Icon
+from ..libs import *
 
 class Dialog(object):
 

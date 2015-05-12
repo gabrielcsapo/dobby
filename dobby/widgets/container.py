@@ -1,8 +1,7 @@
 from __future__ import print_function, absolute_import, division
-
 from ..utils import Attribute, Constraint
-from ..libs import *
 from .base import Widget
+from ..libs import *
 
 class ContainerDelegate_(object):
     ContainerDelegate = ObjCSubclass('NSView', 'NSContainer')
@@ -116,6 +115,7 @@ class Container(Widget):
     ):
 
         super(Container, self).__init__()
+
         self.children = []
         self.constraints = {}
 
@@ -156,7 +156,6 @@ class Container(Widget):
         return self._impl
 
     def constrain(self, constraint):
-        "Add the given constraint to the widget."
         if constraint in self.constraints:
             return
 

@@ -1,29 +1,26 @@
 from __future__ import print_function, absolute_import, division
+from .widget import *
 
-from ..libs import *
-from .base import Widget
-from ..constants import *
+class LabelDelegate_(object):
 
-class Label_impl(object):
+    LabelDelegate = ObjCSubclass('NSTextField', 'LabelDelegate')
 
-    LabelImpl = ObjCSubclass('NSTextField', 'LabelImpl')
-
-    @LabelImpl.method('v@')
+    @LabelDelegate.method('v@')
     def mouseDown_(self, notification):
         if self.interface.on_click:
-            process_callback(self.interface.on_click(self.interface))
+            Widget.callback(self.interface.on_click(self.interface))
 
-    @LabelImpl.method('v@')
+    @LabelDelegate.method('v@')
     def mouseDragged_(self, notification):
         if self.interface.on_mouse_drag:
-            process_callback(self.interface.on_mouse_drag(self.interface))
+            Widget.callback(self.interface.on_mouse_drag(self.interface))
 
-    @LabelImpl.method('v@')
+    @LabelDelegate.method('v@')
     def mouseUp_(self, notification):
         if self.interface.on_mouse_up:
-            process_callback(self.interface.on_mouse_up(self.interface))
+            Widget.callback(self.interface.on_mouse_up(self.interface))
 
-LabelImpl = ObjCClass('LabelImpl')
+LabelDelegate = ObjCClass('LabelDelegate')
 
 class Label(Widget):
     def __init__(self, text=None, alignment=LEFT_ALIGNED, on_click=None, on_mouse_drag=None, on_mouse_up=None):
@@ -38,7 +35,7 @@ class Label(Widget):
         self.alignment = alignment
 
     def startup(self):
-        self._impl = LabelImpl.alloc().init()
+        self._impl = LabelDelegate.alloc().init()
         self._impl.interface = self
         self._impl.setStringValue_(get_NSString(self.text))
         self._impl.setDrawsBackground_(False)

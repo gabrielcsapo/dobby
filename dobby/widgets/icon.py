@@ -1,8 +1,7 @@
 from __future__ import print_function, absolute_import, division
-
-import dobby, os
 from ..libs import *
 from ..widgets.image import *
+import dobby, os
 
 class Icon(object):
     app_icon = None

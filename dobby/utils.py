@@ -2,12 +2,10 @@ from __future__ import print_function, absolute_import, division
 from .libs import *
 
 class InvalidConstraint(Exception):
-    "Raised when a constraint cannot be satisfied"
-    pass
+    print(Exception)
 
 class Constraint(object):
-    """A formal description of a relationship between 2 attributes, or 1 attribute and a constant.
-    """
+    """A formal description of a relationship between 2 attributes, or 1 attribute and a constant."""
     LTE = -1
     EQUAL = 0
     GTE = 1
@@ -62,7 +60,6 @@ class Attribute(object):
     HEIGHT = 8
     CENTER_X = 9
     CENTER_Y = 10
-    # BASELINE = 11
 
     def __init__(self, widget, identifier, multiplier=1, constant=0):
         self.widget = widget
@@ -83,7 +80,6 @@ class Attribute(object):
             Attribute.HEIGHT: "HEIGHT",
             Attribute.CENTER_X: "CENTER_X",
             Attribute.CENTER_Y: "CENTER_Y",
-            # Attribute.BASELINE: "BASELINE",
         }[self.identifier]
 
     def __repr__(self):
