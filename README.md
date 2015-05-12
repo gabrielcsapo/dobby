@@ -8,25 +8,25 @@ Dobby is an abstraction of cocoa widgets into a python setting.
 
 The purpose of this library is to rapidly produce osx native applications without the need for xcode or objective-c programming. All cocoa widgets are avaible with all event functionality and style just as in the cocoa documentation, but abstracted into a python space.
 
-# Current Widgets
+## Current Widgets
 
-- NSButton
-- NSDialog
-- NSLabel
-- NSIcon
-- NSImage
-- NSTextField
-- NSProgressbar
-- NSScrollView
-- NSSplitView
-- NSStatusBar
-- NSTabContainer
-- NSTableView
-- NSTextInput
-- NSTextView
-- NSOutlineView (TreeView)
-- NSView
-- NSWebView
+- Button = NSButton
+- Dialog = NSDialog
+- Label = NSLabel
+- Icon = NSIcon
+- Image = NSImage
+- TextField = NSTextField
+- Progressbar = NSProgressbar
+- ScrollView = NSScrollView
+- SplitView = NSSplitView
+- StatusBar = NSStatusBar
+- TabContainer = NSTabContainer
+- TableView = NSTableView
+- TextInput = NSTextInput
+- TextView = NSTextView
+- OutlineView (TreeView) = NSOutlineView (TreeView)
+- View = NSView
+- WebView = NSWebView
 
 # How can you contribute?
 
