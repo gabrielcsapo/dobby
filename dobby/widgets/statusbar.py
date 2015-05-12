@@ -1,32 +1,29 @@
-from __future__ import print_function, absolute_import, division
+from .widget import *
 
-from ..libs import *
-from .base import Widget
+class MenuDelegate_(object):
+    MenuDelegate = ObjCSubclass('NSMenu', 'MenuDelegate')
 
-class MenuImpl_impl(object):
-    MenuImpl = ObjCSubclass('NSMenu', 'MenuImpl')
-
-    @MenuImpl.method("@@")
+    @MenuDelegate.method("@@")
     def menuDidClose_(self, menu):
         if self.interface.on_close:
             process_callback(self.interface.on_close(self.interface))
 
-    @MenuImpl.method("@@")
+    @MenuDelegate.method("@@")
     def menuWillOpen_(self, menu):
         if self.interface.on_open:
             process_callback(self.interface.on_open(self.interface))
 
-    @MenuImpl.method("@@")
+    @MenuDelegate.method("@@")
     def itemChanged_(self, menu):
         if self.interface.on_open_first:
             process_callback(self.interface.on_open_first(self.interface))
 
-    @MenuImpl.method("v@")
+    @MenuDelegate.method("v@")
     def sendAction_(self, obj):
         callback = self.interface._callbacks[obj]
         callback['function'](callback['text'])
 
-MenuImpl = ObjCClass('MenuImpl')
+MenuDelegate = ObjCClass('MenuDelegate')
 
 class StatusBar(Widget):
 
@@ -40,7 +37,7 @@ class StatusBar(Widget):
         self.startup()
 
     def startup(self):
-        self._menu = MenuImpl.alloc().initWithTitle_(get_NSString(self.title))
+        self._menu = MenuDelegate.alloc().initWithTitle_(get_NSString(self.title))
         self._menu.interface = self
         self._menu.setDelegate_(self._menu)
         self._menu.setAutoenablesItems_(True)

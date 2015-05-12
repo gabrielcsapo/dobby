@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-from __future__ import print_function, unicode_literals, absolute_import
-
 import dobby
 
 class Graze(dobby.App):
@@ -104,7 +101,7 @@ class Graze(dobby.App):
         data.append(['on_off_button', str(self.on_off_button.state())])
         data.append(['momentary_pushin_button', str(self.momentary_pushin_button.state())])
         data.append(['image_button', str(self.image_button.state())])
-        self.table.setData(data)
+        self.table.set_data(data)
 
 if __name__ == '__main__':
     app = Graze('Graze', 'org.pybee.graze')

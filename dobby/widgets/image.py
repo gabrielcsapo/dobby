@@ -1,7 +1,4 @@
-from __future__ import print_function, absolute_import, division
-from .base import Widget
-from ..libs import *
-from ..constants import *
+from .widget import *
 
 class Image(Widget):
     def __init__(self, path, height=None, width=None):
@@ -16,3 +13,6 @@ class Image(Widget):
         if(self.height and self.width):
             size = NSMakeSize(self.width, self.height)
             self._impl.setSize_(size)
+
+    def get_image(self):
+        return self._impl

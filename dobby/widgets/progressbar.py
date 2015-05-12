@@ -1,7 +1,4 @@
-from __future__ import print_function, absolute_import, division
-
-from ..libs import *
-from .base import Widget
+from .widget import *
 
 class ProgressBar(Widget):
     def __init__(self, max=None, value=None, style=NSProgressIndicatorBarStyle):

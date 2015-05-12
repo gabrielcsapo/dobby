@@ -1,17 +1,13 @@
-from __future__ import print_function, absolute_import, division
-
-from ..libs import *
-from .base import Widget
-
+from .widget import *
 
 class ScrollContainer(Widget):
     def __init__(self, horizontal=True, vertical=True):
         super(ScrollContainer, self).__init__()
+       
         self.horizontal = horizontal
         self.vertical = vertical
-
         self._content = None
-
+        
         self.startup()
 
     def startup(self):

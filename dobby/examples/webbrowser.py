@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-from __future__ import print_function, unicode_literals, absolute_import
-
 import dobby
 
 class Graze(dobby.App):
@@ -15,9 +12,9 @@ class Graze(dobby.App):
         self.webview.url = self.url_input.value
         self.go_button = dobby.Button('Go', on_click=self.load_page)
         left_image = dobby.Image('font-awesome/angle_left.png', width=20, height=15)
-        self.go_back_button = dobby.Button('', image=left_image.get_image(), on_click=self.goBack)
+        self.go_back_button = dobby.Button('', image=left_image.get_image(), on_click=self.go_back)
         right_image = dobby.Image('font-awesome/angle_right.png', width=20, height=15)
-        self.go_forward_button = dobby.Button('', image=right_image.get_image(), on_click=self.goForward)
+        self.go_forward_button = dobby.Button('', image=right_image.get_image(), on_click=self.go_forward)
 
         container = dobby.Container()
 
@@ -49,16 +46,15 @@ class Graze(dobby.App):
     def load_page(self, widget=None):
         self.webview.url = self.url_input.value
 
-    def keyUp(self, event):
-        print(event)
-        if(event == 36):
+    def keyUp(self, key):
+        if(key == 36):
             self.load_page()
 
-    def goBack(self, widget):
-        self.webview.goBack()
+    def go_back(self, widget):
+        self.webview.go_back()
 
-    def goForward(self, widget):
-        self.webview.goForward()
+    def go_forward(self, widget):
+        self.webview.go_forward()
 
 if __name__ == '__main__':
     app = Graze('Graze', 'org.pybee.graze')

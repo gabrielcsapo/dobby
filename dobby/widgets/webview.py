@@ -1,20 +1,18 @@
-from __future__ import print_function, absolute_import, division
-from .base import Widget
-from ..libs import *
+from .widget import *
 
-class WebView_impl(object):
-    WebViewImpl = ObjCSubclass('WebView', 'WebViewImpl')
+class WebViewDelegate_(object):
+    WebViewDelegate = ObjCSubclass('WebView', 'WebViewDelegate')
 
-    @WebViewImpl.method('v@@')
+    @WebViewDelegate.method('v@@')
     def webView_didFinishLoadForFrame_(self, sender, frame):
         if self.interface.on_progress_finish:
-            process_callback(self.interface.on_progress_finish())
+            Widget.callback(self.interface.on_progress_finish())
 
     def webView_progressStartedNotification_(self, notification):
         if self.interface.on_progress_started:
-            process_callback(self.interface.on_progress_started())
+            Widget.callback(self.interface.on_progress_started())
 
-WebViewImpl = ObjCClass('WebViewImpl')
+WebViewDelegate = ObjCClass('WebViewDelegate')
 
 class WebView(Widget):
     def __init__(self, url=None, on_progress_started=None, on_progress_finish=None):
@@ -26,7 +24,8 @@ class WebView(Widget):
         self.on_progress_finish = on_progress_finish
 
     def startup(self):
-        self._impl = WebViewImpl.alloc().init()
+        self._impl = WebViewDelegate.alloc().init()
+        self._impl.interface = self
         self._impl.setDownloadDelegate_(self._impl)
         self._impl.setFrameLoadDelegate_(self._impl)
         self._impl.setPolicyDelegate_(self._impl)
@@ -45,26 +44,26 @@ class WebView(Widget):
             request = NSURLRequest.requestWithURL_(NSURL.URLWithString_(get_NSString(self._url)))
             self._impl.mainFrame().loadRequest_(request)
 
-    def canGoBack(self):
+    def can_go_back(self):
         return self._impl.canGoBack()
 
-    def goBack(self):
+    def go_back(self):
         self._impl.goBack()
 
-    def canGoForward(self):
+    def can_go_forward(self):
         return self._impl.canGoForward()
 
-    def goForward(self):
+    def go_forward(self):
         self._impl.goForward()
 
-    def goToBackForwardItem(self, index):
+    def goToItemAtIndex(self, index):
         self._impl.goToBackForwardItem(index)
 
-    def estimatedProgress(self):
+    def estimated_progress(self):
         return self._impl.estimatedProgress()
 
     def reload(self):
         self._impl.reload()
 
-    def stopLoading(self):
+    def stop_loading(self):
         self._impl.stopLoading()

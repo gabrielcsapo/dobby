@@ -1,9 +1,5 @@
-from __future__ import print_function, absolute_import, division
+from .widget import *
 
-from ..libs import *
-from .base import Widget
-
-'''Widget that allows multiple view panes'''
 class TabContainer(Widget):
     def __init__(self):
         super(TabContainer, self).__init__()
@@ -15,10 +11,7 @@ class TabContainer(Widget):
         self._impl = NSTabView.alloc().init()
         self._impl.setTranslatesAutoresizingMaskIntoConstraints_(False)
 
-    ''' Label: String'''
-    ''' Container: Container'''
     def add(self, label, container):
-
         container.app = self.app
         container._impl.setTranslatesAutoresizingMaskIntoConstraints_(True)
         container.window = self.window

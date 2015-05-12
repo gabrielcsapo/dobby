@@ -1,7 +1,5 @@
-from __future__ import print_function, absolute_import, division
 from ..utils import Attribute, Constraint
-from .base import Widget
-from ..libs import *
+from .widget import *
 
 class ContainerDelegate_(object):
     ContainerDelegate = ObjCSubclass('NSView', 'NSContainer')

@@ -1,7 +1,4 @@
-from __future__ import print_function, absolute_import, division
-
-from ..libs import *
-from .base import Widget
+from .widget import *
 
 class SplitView(Widget):
 
@@ -52,6 +49,6 @@ class SplitView(Widget):
 
     def toggle(self):
         if(self.HORIZONTAL):
-            self.setVertical()
+            self.set_vertical()
         else:
-            self.setHorizontal()
+            self.set_horizontal()

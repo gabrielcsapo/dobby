@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-from __future__ import print_function, unicode_literals, absolute_import
-
 import dobby
 
 class Graze(dobby.App):
@@ -9,7 +6,7 @@ class Graze(dobby.App):
 
         container = dobby.Container()
 
-        self.table = dobby.TableView(['First Name', 'Last Name'], on_selection_change=self.onChange)
+        self.table = dobby.TableView(['First Name', 'Last Name'], on_selection_change=self.on_change)
         self.table.insert(None, 'John', 'Doe')
         self.table.insert(None, 'Jane', 'Doe')
         self.table.insert(None, 'Py', 'Bee')
@@ -19,18 +16,18 @@ class Graze(dobby.App):
         container.constrain(self.table.TOP == container.TOP + 40)
         container.constrain(self.table.BOTTOM == container.BOTTOM)
 
-        self.saveData = dobby.Button("Save Data", on_click=self.getValues)
-        container.add(self.saveData)
-        container.constrain(self.saveData.TOP == container.TOP + 10)
-        container.constrain(self.saveData.LEFT == container.LEFT + 10)
+        self.btnSaveData = dobby.Button("Save Data", on_click=self.get_values)
+        container.add(self.btnSaveData)
+        container.constrain(self.btnSaveData.TOP == container.TOP + 10)
+        container.constrain(self.btnSaveData.LEFT == container.LEFT + 10)
 
         app.main_window.content = container
 
-    def onChange(self, notification):
+    def on_change(self, notification):
         print('selection changed')
 
-    def getValues(self, widget):
-        print(self.table.getData())
+    def get_values(self, widget):
+        print(self.table.get_data())
 
 if __name__ == '__main__':
     app = Graze('Graze', 'org.pybee.graze')

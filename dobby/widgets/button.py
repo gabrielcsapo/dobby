@@ -1,5 +1,4 @@
-from .base import Widget
-from ..libs import *
+from .widget import *
 
 class ButtonDelegate_(object):
     ButtonDelegate = ObjCSubclass('NSButton', 'ButtonDelegate')

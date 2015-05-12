@@ -1,59 +1,53 @@
-from __future__ import print_function, absolute_import, division
+from .widget import *
 
-from ..libs import NSTextField, NSSecureTextField, NSTextFieldSquareBezel, get_NSString, cftype_to_value, cfstring_to_string
-from ..libs.objc import *
-from .base import Widget
+class TextInputDelegate_(object):
+    TextInputDelegate = ObjCSubclass('NSTextField', 'TextInputDelegate')
 
-class TextInput_impl(object):
-
-    TextInputImpl = ObjCSubclass('NSTextField', 'TextInputImpl')
-
-    @TextInputImpl.method('v@')
+    @TextInputDelegate.method('v@')
     def textDidChange_(self, notification):
         if self.interface.on_textChange:
-            process_callback(self.interface.on_textChange())
+            Widget.callback(self.interface.on_textChange())
 
-    @TextInputImpl.method('v@')
+    @TextInputDelegate.method('v@')
     def textDidBeginEditing_(self, notification):
         if self.interface.on_beginEditing:
-            process_callback(self.interface.on_beginEditing())
+            Widget.callback(self.interface.on_beginEditing())
 
-    @TextInputImpl.method('v@')
+    @TextInputDelegate.method('v@')
     def textDidEndEditing_(self, notification):
         if self.interface.on_endEditing:
-            process_callback(self.interface.on_endEditing())
+            Widget.callback(self.interface.on_endEditing())
 
-    @TextInputImpl.method('v@')
+    @TextInputDelegate.method('v@')
     def keyUp_(self, event):
         if self.interface.on_keyUp:
             keyCode = cftype_to_value(event.valueForKey_(get_NSString('keyCode')))
-            process_callback(self.interface.on_keyUp(keyCode))
+            Widget.callback(self.interface.on_keyUp(keyCode))
 
-    @TextInputImpl.method('v@')
+    @TextInputDelegate.method('v@')
     def keyDown_(self, event):
         keyCode = cftype_to_value(event.valueForKey_(get_NSString('keyCode')))
 
-class SecureInput_impl(object):
+class SecureTextInputDelegate_(object):
+    SecureTextInputDelegate = ObjCSubclass('NSSecureTextField', 'SecureTextInputDelegate')
 
-    SecureInputImpl = ObjCSubclass('NSSecureTextField', 'SecureInputImpl')
-
-    @SecureInputImpl.method('v@')
+    @SecureTextInputDelegate.method('v@')
     def textDidChange_(self, notification):
         if self.interface.on_textChange:
-            process_callback(self.interface.on_textChange())
+            Widget.callback(self.interface.on_textChange())
 
-    @SecureInputImpl.method('v@')
+    @SecureTextInputDelegate.method('v@')
     def textDidBeginEditing_(self, notification):
         if self.interface.on_beginEditing:
-            process_callback(self.interface.on_beginEditing())
+            Widget.callback(self.interface.on_beginEditing())
 
-    @SecureInputImpl.method('v@')
+    @SecureTextInputDelegate.method('v@')
     def textDidEndEditing_(self, notification):
         if self.interface.on_endEditing:
-            process_callback(self.interface.on_endEditing())
+            Widget.callback(self.interface.on_endEditing())
 
-SecureInputImpl = ObjCClass('SecureInputImpl')
-TextInputImpl = ObjCClass('TextInputImpl')
+SecureTextInputDelegate = ObjCClass('SecureTextInputDelegate')
+TextInputDelegate = ObjCClass('TextInputDelegate')
 
 class TextInput(Widget):
 
@@ -71,12 +65,11 @@ class TextInput(Widget):
         self.on_beginEditing = on_beginEditing
         self.on_textChange = on_textChange
 
-
     def startup(self):
         if not(self.secure):
-            self._impl = TextInputImpl.alloc().init()
+            self._impl = TextInputDelegate.alloc().init()
         else:
-            self._impl = SecureInputImpl.alloc().init()
+            self._impl = SecureTextInputDelegate.alloc().init()
 
         self._impl.interface = self
         self._impl.setBezeled_(True)

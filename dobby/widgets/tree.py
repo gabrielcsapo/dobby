@@ -1,7 +1,4 @@
-from __future__ import print_function, absolute_import, division
-
-from ..libs import *
-from .base import Widget
+from .widget import *
 
 NSObject = ObjCClass('NSObject')
 
@@ -13,10 +10,10 @@ class TreeNode(object):
         self.children = []
 
 
-class TreeImpl_impl(object):
-    TreeImpl = ObjCSubclass('NSOutlineView', 'TreeImpl')
+class TreeDelegate_(object):
+    TreeDelegate = ObjCSubclass('NSOutlineView', 'TreeDelegate')
 
-    @TreeImpl.method('@@i@')
+    @TreeDelegate.method('@@i@')
     def outlineView_child_ofItem_(self, tree, child, item):
         if item is None:
             key = None
@@ -27,7 +24,7 @@ class TreeImpl_impl(object):
         node = self.interface._data[node_id]['node']
         return node
 
-    @TreeImpl.method('B@@')
+    @TreeDelegate.method('B@@')
     def outlineView_isItemExpandable_(self, tree, item):
         if item is None:
             key = None
@@ -36,7 +33,7 @@ class TreeImpl_impl(object):
 
         return self.interface._data[key]['children'] is not None
 
-    @TreeImpl.method('i@@')
+    @TreeDelegate.method('i@@')
     def outlineView_numberOfChildrenOfItem_(self, tree, item):
         if item is None:
             key = None
@@ -48,17 +45,17 @@ class TreeImpl_impl(object):
         except TypeError:
             return 0
 
-    @TreeImpl.method('i@@@')
+    @TreeDelegate.method('i@@@')
     def outlineView_objectValueForTableColumn_byItem_(self, tree, column, item):
         column_index = int(cfstring_to_string(column.identifier))
         return get_NSString(str(self.interface._data[id(item)]['data'][column_index]))
 
-    @TreeImpl.method('v@')
+    @TreeDelegate.method('v@')
     def outlineViewSelectionDidChange_(self, notification):
         print ("tree selection changed")
 
 
-TreeImpl = ObjCClass('TreeImpl')
+TreeDelegate = ObjCClass('TreeDelegate')
 
 class Tree(Widget):
     def __init__(self, headings):
@@ -77,8 +74,6 @@ class Tree(Widget):
         self.startup()
 
     def startup(self):
-        # Create a tree view, and put it in a scroll view.
-        # The scroll view is the _impl, because it's the outer container.
         self._impl = NSScrollView.alloc().init()
         self._impl.setHasVerticalScroller_(True)
         self._impl.setHasHorizontalScroller_(True)
@@ -86,7 +81,7 @@ class Tree(Widget):
         self._impl.setBorderType_(NSBezelBorder)
         self._impl.setTranslatesAutoresizingMaskIntoConstraints_(False)
 
-        self._tree = TreeImpl.alloc().init()
+        self._tree = TreeDelegate.alloc().init()
         self._tree.interface = self
         self._tree.setColumnAutoresizingStyle_(NSTableViewUniformColumnAutoresizingStyle)
         self._columns = [
@@ -101,13 +96,12 @@ class Tree(Widget):
             cell.setSelectable_(False)
             column.valueForKey_(get_NSString('headerCell')).setStringValue_(get_NSString(heading))
 
-        # Put the tree arrows in the first column.
         self._tree.setOutlineTableColumn_(self._columns[0])
         self._tree.setDelegate_(self._tree)
         self._tree.setDataSource_(self._tree)
         self._impl.setDocumentView_(self._tree)
 
-    def reloadData(self):
+    def reload_data(self):
         self._tree.reloadData()
 
     def insert(self, parent, index, *data):
@@ -129,5 +123,5 @@ class Tree(Widget):
             'children': None,
         }
         
-        self.reloadData()
+        self.reload_data()
         return id(node)

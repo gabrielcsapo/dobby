@@ -1,21 +1,18 @@
-from __future__ import print_function, absolute_import, division
+from .widget import *
 
-from ..libs import *
-from .base import Widget
+class TableDelegate_(object):
+    TableDelegate = ObjCSubclass('NSTableView', 'TableDelegate')
 
-class TableImpl_impl(object):
-    TableImpl = ObjCSubclass('NSTableView', 'TableImpl')
-
-    @TableImpl.method('i@')
+    @TableDelegate.method('i@')
     def numberOfRowsInTableView_(self, table):
         return len(self.interface._data)
 
-    @TableImpl.method('@@@i')
+    @TableDelegate.method('@@@i')
     def tableView_objectValueForTableColumn_row_(self, table, column, row):
         column_index = int(cfstring_to_string(column.identifier))
         return get_NSString(self.interface._data[row][column_index])    
 
-    @TableImpl.method('@@@@i')
+    @TableDelegate.method('@@@@i')
     def tableView_setObjectValue_forTableColumn_row_(self, table, newValue, column, row): 
         column_index = int(cfstring_to_string(column.identifier))
         oldValue = cfstring_to_string(self.tableView_objectValueForTableColumn_row_(table, column, row))
@@ -28,28 +25,28 @@ class TableImpl_impl(object):
                 newRow.append(value)
 
         self.interface._data[row] = newRow
-        self.interface._table.reloadData()
+        self.interface._table.reload_data()
 
-    @TableImpl.method('v@')
+    @TableDelegate.method('v@')
     def tableViewSelectionIsChanging_(self, notification):
         print('selection changed')
 
-    @TableImpl.method('v@')
+    @TableDelegate.method('v@')
     def tableViewSelectionDidChange_(self, notification):
         if self.interface.on_selection_change:
-            process_callback(self.interface.on_selection_change(notification))
+            Widget.callback(self.interface.on_selection_change(notification))
 
-    @TableImpl.method('v@')
+    @TableDelegate.method('v@')
     def tableViewColumnDidMove_(self, notification):
         if self.interface.on_column_move:
-            process_callback(self.interface.on_column_move(notification))
+            Widget.callback(self.interface.on_column_move(notification))
 
-    @TableImpl.method('v@')
+    @TableDelegate.method('v@')
     def tableViewColumnDidResize_(self, notification):
         if self.interface.on_column_resize:
-            process_callback(self.interface.on_column_resize(notification))
+            Widget.callback(self.interface.on_column_resize(notification))
 
-TableImpl = ObjCClass('TableImpl')
+TableDelegate = ObjCClass('TableDelegate')
 
 class TableView(Widget):
     def __init__(self, headings, on_selection_change=None, on_column_move=None, on_column_resize=None):
@@ -65,8 +62,6 @@ class TableView(Widget):
         self.startup()
 
     def startup(self):
-        # Create a table view, and put it in a scroll view.
-        # The scroll view is the _impl, because it's the outer container.
         self._impl = NSScrollView.alloc().init()
         self._impl.setHasVerticalScroller_(True)
         self._impl.setHasHorizontalScroller_(True)
@@ -74,17 +69,15 @@ class TableView(Widget):
         self._impl.setBorderType_(NSBezelBorder)
         self._impl.setTranslatesAutoresizingMaskIntoConstraints_(False)
 
-        self._table = TableImpl.alloc().init()
+        self._table = TableDelegate.alloc().init()
         self._table.interface = self
         self._table.setColumnAutoresizingStyle_(NSTableViewUniformColumnAutoresizingStyle)
 
-        # Create columns for the table
         self._columns = []
         for i, heading in enumerate(self.headings):
             print(i)
             column = NSTableColumn.alloc().initWithIdentifier_(get_NSString('%d' % i))
             column.valueForKey_(get_NSString('headerCell')).setStringValue_(get_NSString(heading))
-            # column.headerCell.setStringValue(get_NSString(heading))
             self._columns.append(column)
             self._table.addTableColumn_(column)
 
@@ -101,14 +94,14 @@ class TableView(Widget):
         else:
             self._data.insert(index, data)
 
-        self.reloadData()
+        self.reload_data()
 
-    def reloadData(self):
+    def reload_data(self):
         self._table.reloadData()
 
-    def getData(self):
+    def get_data(self):
         return self._data
 
-    def setData(self, data):
+    def set_data(self, data):
         self._data = data
-        self.reloadData()
+        self.reload_data()

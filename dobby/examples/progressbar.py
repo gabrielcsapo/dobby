@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-from __future__ import print_function, unicode_literals, absolute_import
-
 import dobby
 
 class Graze(dobby.App):
@@ -24,7 +21,7 @@ class Graze(dobby.App):
         self.main_progress.setStyleSpinner()
 
         main_container.add(self.main_progress)
-        main_container.constrain(self.main_progress.BOTTOM == main_container.BOTTOM + 5)
+        main_container.constrain(self.main_progress.TOP == main_increment.BOTTOM + 5)
         main_container.constrain(self.main_progress.RIGHT == main_container.RIGHT - 5)
         main_container.constrain(self.main_progress.LEFT == main_container.LEFT + 5)
 
