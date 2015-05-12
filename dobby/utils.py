@@ -1,20 +1,5 @@
 from __future__ import print_function, absolute_import, division
-import inspect
-
 from .libs import *
-
-class LongRunningTask_impl(object):
-    LongRunningTask = ObjCSubclass('NSObject', 'LongRunningTask')
-
-    @LongRunningTask.method('v@')
-    def performIteration_(self, info):
-        try:
-            delay = next(self.interface)
-            NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(delay, self, get_selector('performIteration:'), None, False)
-        except StopIteration:
-            pass
-
-LongRunningTask = ObjCClass('LongRunningTask')
 
 class InvalidConstraint(Exception):
     "Raised when a constraint cannot be satisfied"

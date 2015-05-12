@@ -1,6 +1,6 @@
 from __future__ import print_function, absolute_import, division
-
 from ..utils import Attribute
+import inspect
 
 class Widget(object):
     def __init__(self):
@@ -54,9 +54,8 @@ class Widget(object):
     def get_inst(self):
         return self._impl
 
+    @staticmethod
     def callback(callback_result):
-        "Handle generators in actions"
         if inspect.isgenerator(callback_result):
             task = LongRunningTask.alloc().init()
             task.interface = callback_result
-        task.performIteration_(None)
