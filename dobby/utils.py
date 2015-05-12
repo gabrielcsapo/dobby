@@ -16,13 +16,6 @@ class LongRunningTask_impl(object):
 
 LongRunningTask = ObjCClass('LongRunningTask')
 
-def process_callback(callback_result):
-    "Handle generators in actions"
-    if inspect.isgenerator(callback_result):
-        task = LongRunningTask.alloc().init()
-        task.interface = callback_result
-        task.performIteration_(None)
-
 class InvalidConstraint(Exception):
     "Raised when a constraint cannot be satisfied"
     pass

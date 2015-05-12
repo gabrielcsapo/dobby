@@ -1,7 +1,6 @@
 from __future__ import print_function, absolute_import, division
 
 from .libs import *
-from .utils import process_callback
 
 class WindowDelegate_impl(object):
     WindowDelegate = ObjCSubclass('NSObject', 'WindowDelegate')

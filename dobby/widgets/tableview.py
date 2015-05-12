@@ -2,7 +2,6 @@ from __future__ import print_function, absolute_import, division
 
 from ..libs import *
 from .base import Widget
-from ..utils import process_callback
 
 class TableImpl_impl(object):
     TableImpl = ObjCSubclass('NSTableView', 'TableImpl')

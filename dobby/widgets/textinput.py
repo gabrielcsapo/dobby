@@ -3,7 +3,6 @@ from __future__ import print_function, absolute_import, division
 from ..libs import NSTextField, NSSecureTextField, NSTextFieldSquareBezel, get_NSString, cftype_to_value, cfstring_to_string
 from ..libs.objc import *
 from .base import Widget
-from ..utils import process_callback
 
 class TextInput_impl(object):
 

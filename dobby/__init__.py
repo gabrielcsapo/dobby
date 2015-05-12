@@ -21,6 +21,7 @@ from .widgets.tableview import *
 from .widgets.textinput import *
 from .widgets.textview import *
 from .widgets.tree import *
+from .widgets.widget import *
 from .widgets.webview import *
 
 __all__ = [
@@ -46,6 +47,7 @@ __all__ = [
     'Tree',
     'View',
     'WebView',
+    'Widget'
 ]
 
 __version__ = '0.1'
@@ -53,4 +55,4 @@ __version__ = '0.1'
 import platform
 
 if tuple(int(v) for v in platform.mac_ver()[0].split('.')[:2]) < (10, 7):
-    raise RuntimeError('Dobby requires OS X 10.7 (Lion) or greater.')
+    raise RuntimeError('Dobby requires OS X 10.10 (Yosemite) or greater.')
