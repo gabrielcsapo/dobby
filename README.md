@@ -24,7 +24,7 @@ The purpose of this library is to rapidly produce osx native applications withou
 - TableView = NSTableView
 - TextInput = NSTextInput
 - TextView = NSTextView
-- OutlineView (TreeView) = NSOutlineView (TreeView)
+- TreeView = NSOutlineView
 - View = NSView
 - WebView = NSWebView
 

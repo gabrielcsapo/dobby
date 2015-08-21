@@ -1,8 +1,8 @@
-import inspect
 from __future__ import print_function, absolute_import, division
 from ..utils import Attribute
 from ..libs import *
 from ..constants import *
+import inspect
 
 class Widget(object):
     def __init__(self):
